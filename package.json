@@ -1,0 +1,23 @@
+{
+  "name": "puppet-buddy",
+  "version": "0.0.0",
+  "description": "A browser puppet friend. For when you are lonely.",
+  "main": "sketch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ethanmuller/puppet-buddy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ethanmuller/puppet-buddy/issues"
+  },
+  "homepage": "https://github.com/ethanmuller/puppet-buddy",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.10.1"
+  }
+}
