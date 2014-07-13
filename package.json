@@ -26,6 +26,8 @@
     "gulp-imagemin": "^0.6.1",
     "gulp-changed": "^0.4.0",
     "gulp-util": "^2.2.20",
-    "gulp-bower": "0.0.6"
+    "main-bower-files": "^1.0.0",
+    "gulp-if": "^1.2.2",
+    "require-dir": "^0.1.0"
   }
 }

@@ -1,47 +1,51 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
 
-var changed = require('gulp-changed');
-var uglify = require('gulp-uglify');
-var coffee = require('gulp-coffee');
-var concat = require('gulp-concat');
-var bower = require('gulp-bower');
-var sourcemaps = require('gulp-sourcemaps');
-var del = require('del');
+var requireDir = require('require-dir'),
+  dir = requireDir('./tasks');
+
+var changed = require('gulp-changed'),
+  uglify = require('gulp-uglify'),
+  coffee = require('gulp-coffee'),
+  concat = require('gulp-concat'),
+  sourcemaps = require('gulp-sourcemaps'),
+  del = require('del'),
+  bowerFiles = require('main-bower-files'),
+  gulpif = require('gulp-if');
+
+var env = process.env.NODE_ENV || 'development';
 
 var paths = {
   dest: 'build/',
+  lib: 'build/lib',
   scripts: ['src/coffee/**/*.coffee']
 };
-
-var assets = [
-  'assets/**/*'
-];
 
 gulp.task('clean', function(callback) {
   del(paths.dest, callback);
 });
 
-gulp.task('bower', function() {
-  return bower('./my_bower_components')
-    .pipe(gulp.dest('lib/'));
+gulp.task("bower-files", ['clean'], function(){
+  return gulp.src(bowerFiles())
+    .pipe(changed(paths.lib))
+    .pipe(concat('vendor.js'))
+    .pipe(gulpif(env === 'production', uglify()))
+    .pipe(gulp.dest(paths.lib));
 });
 
-gulp.task('assets', function() {
-  gulp.src(assets, { base: './' })
-  .pipe(gulp.dest(paths.dest));
-});
-
-gulp.task('scripts', function() {
+gulp.task('scripts', ['clean'], function() {
   // Minify and copy all JavaScript (except vendor scripts)
   // with sourcemaps all the way down
+
+  var out = paths.dest + 'js';
+
   return gulp.src(paths.scripts)
+    .pipe(changed(out))
     .pipe(sourcemaps.init())
       .pipe(coffee())
-      .pipe(uglify())
+      .pipe(gulpif(env === 'production', uglify()))
       .pipe(concat('all.min.js'))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(paths.dest + 'js'));
+    .pipe(gulp.dest(out));
 });
 
 gulp.task('watch', function(){
@@ -50,4 +54,9 @@ gulp.task('watch', function(){
 
 });
 
-gulp.task('default', ['clean', 'scripts']);
+gulp.task('assets', ['clean'], function() {
+  gulp.src('assets/**/*', { base: './' })
+  .pipe(gulp.dest('build/'));
+});
+
+gulp.task('default', ['clean', 'assets', 'scripts', 'bower-files']);
