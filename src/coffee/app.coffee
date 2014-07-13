@@ -1,1 +1,1 @@
-alert 'blah'
+alert 'I am coffeescript!'
