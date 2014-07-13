@@ -2,6 +2,11 @@ module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON('package.json')
 
+    connect:
+      server:
+        options:
+          base: 'build/'
+
     watch:
       scripts:
         files: 'src/coffee/*.coffee'
@@ -9,7 +14,6 @@ module.exports = (grunt) ->
       assets:
         files: 'assets/**/*'
         tasks: 'assets'
-
 
     coffee:
       build:
@@ -26,8 +30,11 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-watch')
+  grunt.loadNpmTasks('grunt-contrib-connect')
 
   grunt.registerTask('js', ['coffee'])
   grunt.registerTask('assets', ['copy'])
+
+  grunt.registerTask('server', ['connect', 'watch'])
 
   grunt.registerTask('default', ['js', 'html'])
