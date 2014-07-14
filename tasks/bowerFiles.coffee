@@ -1,4 +1,4 @@
-module.exports = (gulp, paths, env) ->
+module.exports = (gulp, cfg, env) ->
   concat = require "gulp-concat"
   uglify = require "gulp-uglify"
   gulpif = require "gulp-if"
@@ -8,4 +8,4 @@ module.exports = (gulp, paths, env) ->
     gulp.src(bowerFiles())
       .pipe(concat("vendor.js"))
       .pipe(gulpif(env is "production", uglify()))
-      .pipe gulp.dest(paths.lib)
+      .pipe gulp.dest(cfg.paths.lib)

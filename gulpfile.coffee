@@ -2,22 +2,17 @@ gulp = require "gulp"
 _ = require "lodash"
 requireDir = require "require-dir"
 
+config = require "./config.coffee"
+
 # Load all tasks
 tasks = requireDir "./tasks"
 
-# Get environmet
+# Get environment, for environment-specific activities
 env = process.env.NODE_ENV or "development"
 
-# Set up commonly-used paths
-paths =
-  dest: "build/"
-  lib: "build/lib/"
-  scripts: ["src/coffee/**/*.coffee"]
-  assets: "assets/"
-
-# Initialize tall task files
+# Loop through all tasks and create them
 _.each tasks, (task) ->
-  task(gulp, paths, env)
+  task(gulp, config, env)
 
 gulp.task "default", [
   "clean"

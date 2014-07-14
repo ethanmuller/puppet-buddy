@@ -1,6 +1,6 @@
-module.exports = function(gulp, paths) {
+module.exports = function(gulp, cfg, env) {
   gulp.task('assets', ['clean'], function() {
-    gulp.src(paths.assets + '**/*', { base: './' })
+    gulp.src(cfg.paths.assets + '**/*', { base: './' })
     .pipe(gulp.dest('build/'));
   });
 };

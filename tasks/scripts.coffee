@@ -1,4 +1,4 @@
-module.exports = (gulp, paths, env) ->
+module.exports = (gulp, cfg, env) ->
   coffee = require "gulp-coffee"
   concat = require "gulp-concat"
   uglify = require "gulp-uglify"
@@ -8,8 +8,8 @@ module.exports = (gulp, paths, env) ->
   gulp.task "scripts", ["clean"], ->
     # Minify and copy all JavaScript (except vendor scripts)
     # with sourcemaps all the way down
-    out = paths.dest + "js"
-    gulp.src(paths.scripts)
+    out = cfg.paths.dest + "js"
+    gulp.src(cfg.paths.scripts + '**/*.coffee')
       .pipe(sourcemaps.init())
       .pipe(coffee())
       .pipe(gulpif(env is "production", uglify()))
