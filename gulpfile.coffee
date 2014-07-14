@@ -1,5 +1,6 @@
 gulp = require "gulp"
 _ = require "lodash"
+runSequence = require "run-sequence"
 requireDir = require "require-dir"
 
 config = require "./config.coffee"
@@ -14,11 +15,19 @@ env = process.env.NODE_ENV or "development"
 _.each tasks, (task) ->
   task(gulp, config, env)
 
-# Here's the default task.
-# All other tasks are in 'tasks/'
-gulp.task "default", [
-  "clean"
-  "assets"
-  "scripts"
-  "bower-files"
-]
+# "default" and "build" will be your most commonly-run tasks from the CLI.
+# All the more granular tasks are in "tasks/"
+
+gulp.task "build", (callback) ->
+  runSequence(
+    'clean'
+    'assets'
+    [
+      'scripts'
+      'bower-files'
+    ]
+    callback
+  )
+
+gulp.task "default", (callback) ->
+  runSequence ['watch', 'build']

@@ -1,6 +1,12 @@
 module.exports =
   paths:
     dest: 'build/'
-    lib: 'build/lib/'
-    scripts: 'src/coffee/'
-    assets: 'assets/'
+
+    assets: 'src/assets/'
+
+    scriptsIn: 'src/coffee/'
+    vendorIn: 'src/vendor/'
+
+    scriptsOut: 'build/js/'
+    stylesOut: 'build/css/'
+    vendorOut: 'build/vendor/'

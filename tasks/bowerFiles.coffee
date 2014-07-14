@@ -4,8 +4,8 @@ module.exports = (gulp, cfg, env) ->
   gulpif = require "gulp-if"
   bowerFiles = require "main-bower-files"
 
-  gulp.task "bower-files", ["clean"], ->
+  gulp.task "bower-files", ['clean-vendor'], ->
     gulp.src(bowerFiles())
-    .pipe(concat("vendor.js"))
-    .pipe(gulpif(env is "production", uglify()))
-    .pipe gulp.dest(cfg.paths.lib)
+      .pipe(concat("vendor.js"))
+      .pipe(gulpif(env is "production", uglify()))
+      .pipe gulp.dest(cfg.paths.vendorOut)

@@ -5,7 +5,7 @@ module.exports = (gulp, cfg, env) ->
   sourcemaps = require "gulp-sourcemaps"
   gulpif = require "gulp-if"
 
-  gulp.task "scripts", ["clean"], ->
+  gulp.task "scripts", ['clean-scripts'], ->
     # Minify and copy all JavaScript (except vendor scripts)
     # with sourcemaps all the way down
     out = cfg.paths.dest + "js"
